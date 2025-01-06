@@ -15,12 +15,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && pip install --no-cache-dir -r requirements.txt \
  && apt-get purge -y --auto-remove build-essential gcc \
  && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
-
-
-
-
-RUN useradd --no-log-init --system --create-home appuser
+ && rm -rf /var/lib/apt/lists/* \
+ && useradd --no-log-init --system --create-home appuser
+ 
 USER appuser
 
 EXPOSE 8501
