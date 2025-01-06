@@ -1,16 +1,23 @@
-FROM python:3.9
+FROM python:3.9-slim
+
 
 WORKDIR /app
 
 COPY requirements.txt .
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
- && pip install --upgrade pip \
+    build-essential gcc \
+ && pip install --no-cache-dir --upgrade pip \
  && pip install --no-cache-dir -r requirements.txt \
- && apt-get clean && rm -rf /var/lib/apt/lists/*
-
+ && apt-get purge -y --auto-remove build-essential gcc \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 COPY . /app
+
+
+RUN useradd --no-log-init --system --create-home appuser
+USER appuser
 
 EXPOSE 8501
 
