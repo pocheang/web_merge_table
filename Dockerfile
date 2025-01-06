@@ -3,7 +3,11 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY requirements.txt /app/
+COPY app_v0.1.py /app/
+COPY static/ /app/static/
+COPY templates/ /app/templates/
+COPY config.yaml /app/
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential gcc \
@@ -13,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-COPY . /app
+
 
 
 RUN useradd --no-log-init --system --create-home appuser
